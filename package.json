@@ -1,0 +1,14 @@
+{
+  "name": "listener",
+  "version": "1.0.0",
+  "description": "A sample ExpressJS app that listens and logs requests",
+  "main": "app.js",
+  "scripts": {
+    "app" : "node app"
+  },
+  "author": "Jeremy Lanssiers",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
