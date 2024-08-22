@@ -24,7 +24,7 @@ function logRequest(req) {
   const requestDetailsForConsole = [
     `\n${cyanColor}${url(req)}${resetColor}`,
     `${method(req)}`,
-    headers(req),
+    `${cyanColor}${headers(req)}${resetColor}`,
     body(req),
     queryParams(req),
     params(req),
