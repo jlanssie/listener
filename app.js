@@ -5,25 +5,49 @@ const port = 5555;
 const fs = require("fs");
 const LOG = "output.log";
 
+resetColor = "\x1b[0m";
+redColor = "\x1b[31m";
+greenColor = "\x1b[32m";
+cyanColor = "\x1b[36m";
+
+const method = (req) => `Request Method: ${req.method}`;
+const url = (req) => `Request URL: ${req.url}`;
+const headers = (req) => `Request Headers: ${JSON.stringify(req.headers)}`;
+const body = (req) => `Request Body: ${JSON.stringify(req.body)}`;
+const queryParams = (req) =>
+  `Request Query Params: ${JSON.stringify(req.query)}`;
+const params = (req) => `Request Params: ${JSON.stringify(req.params)}`;
+const ip = (req) => `Request IP: ${req.ip}`;
+const time = () => `Request Time: ${new Date().toISOString()}`;
+
 function logRequest(req) {
-  let string = `
-    Request Method: ${req.method}\nRequest URL: ${
-    req.url
-  }\nRequest Headers: ${JSON.stringify(
-    req.headers
-  )}\nRequest Body: ${JSON.stringify(
-    req.body
-  )}\nRequest Query Params: ${JSON.stringify(
-    req.query
-  )}\nRequest Params: ${JSON.stringify(req.params)}\nRequest IP: ${
-    req.ip
-  }\nRequest Time: ${new Date().toISOString()}\n\n`;
+  const requestDetailsForConsole = [
+    `\n${cyanColor}${url(req)}${resetColor}`,
+    `${method(req)}`,
+    headers(req),
+    body(req),
+    queryParams(req),
+    params(req),
+    ip(req),
+    `${time()}\n`,
+  ].join("\n");
 
-  console.log(string);
+  const requestDetailsForFile = [
+    `\nurl(req)`,
+    `${method(req)}`,
+    headers(req),
+    body(req),
+    queryParams(req),
+    params(req),
+    ip(req),
+    `${time()}\n`,
+  ].join("\n");
 
-  fs.writeFile(LOG, string, { flag: "a" }, (err) => {
+  console.log(requestDetailsForConsole);
+
+  fs.writeFile(LOG, requestDetailsForFile, { flag: "a" }, (err) => {
     if (err) {
-      console.error("Error writing to file:", err);
+      console.error(`${redColor}Error writing to file:`, err, `${resetColor}`);
       return;
     }
   });
