@@ -1,0 +1,24 @@
+# IDE
+.vscode
+.idea
+
+# npm/pnpm modules
+node_modules
+
+# Secrets
+.secrets
+
+# Jest
+coverage
+
+# logs
+output.log
+
+# build artifacts folders
+.build
+
+# OS
+.DS_Store
+
+# npm/pnpm modules
+node_modules

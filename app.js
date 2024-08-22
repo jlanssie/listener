@@ -2,20 +2,36 @@ const express = require("express");
 const app = express();
 const port = 5555;
 
+const fs = require("fs");
+const LOG = "output.log";
+
 function logRequest(req) {
-  console.log("Request Method:", req.method);
-  console.log("Request URL:", req.url);
-  console.log("Request Headers:", req.headers);
-  console.log("Request Body:", req.body);
-  console.log("Request Query Params:", req.query);
-  console.log("Request Params:", req.params);
-  console.log("Request IP:", req.ip);
-  console.log("\n----\n");
+  let string = `
+    Request Method: ${req.method}\nRequest URL: ${
+    req.url
+  }\nRequest Headers: ${JSON.stringify(
+    req.headers
+  )}\nRequest Body: ${JSON.stringify(
+    req.body
+  )}\nRequest Query Params: ${JSON.stringify(
+    req.query
+  )}\nRequest Params: ${JSON.stringify(req.params)}\nRequest IP: ${
+    req.ip
+  }\nRequest Time: ${new Date().toISOString()}\n\n`;
+
+  console.log(string);
+
+  fs.writeFile(LOG, string, { flag: "a" }, (err) => {
+    if (err) {
+      console.error("Error writing to file:", err);
+      return;
+    }
+  });
 }
 
 app.use(express.json());
 
-app.use(function(req, res){
+app.use(function (req, res) {
   logRequest(req);
   res.sendStatus(200);
 });
